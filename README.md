@@ -25,7 +25,7 @@
 
 | **97.5%** | **+72.7%** | **1,357** | **97.0%** | **85.35%** |
 | :---: | :---: | :---: | :---: | :---: |
-| **Detection Accuracy**<br><sub>Video Shoplifting (ShopGuard)</sub> | **Extraction Improvement**<br><sub>QLoRA Fine-Tuned Qwen2.5-VL</sub> | **Curated Dataset**<br><sub>MCU Block Diagram Annotations</sub> | **JSON Validity Rate**<br><sub>Structured VLM Outputs</sub> | **Multi-Modal Re-ID**<br><sub>CLIP-ReID + ArcFace Fusion</sub> |
+| **Detection Accuracy**<br><sub>Surpasses X3D-S (ShopGuard)</sub> | **Extraction Improvement**<br><sub>QLoRA Fine-Tuned Qwen2.5-VL</sub> | **Curated Dataset**<br><sub>MCU Block Diagram Annotations</sub> | **JSON Validity Rate**<br><sub>Structured VLM Outputs</sub> | **Multi-Modal Re-ID**<br><sub>CLIP-ReID + ArcFace Fusion</sub> |
 
 </div>
 
@@ -44,14 +44,22 @@ I am an **AI Engineer & Vision-Language Model Researcher** pursuing my degree at
 
 ## 📑 Research & Publications
 
-### 📄 **[ShopGuard: Temporal Attention-Based Shoplifting Detection](https://github.com/Khaled-844AI)**
+### 📄 ShopGuard: Kinetic Saliency-Contrast Attention for CCTV Shoplifting Detection
+[![Status: Active Research / Under Review](https://img.shields.io/badge/Status-Under_Review_%7C_Active_Research-yellow?style=flat-square&logo=academia)](#)
+[![Journal](https://img.shields.io/badge/Target-Elsevier_IVC-orange?style=flat-square)](#)
+
 *Under Review at **Image and Vision Computing (IVC)** · **Elsevier** (2026)*  
 *Co-authored with **B. Khaldi** (LabRI-SBA Lab, Higher School of Computer Science, ESI-SBA)*
 
-- **Core Innovation**: An end-to-end video classification and anomaly detection architecture combining **EfficientNet-B3** spatial feature extraction, **BiGRU** temporal sequence modeling, and a custom **Temporal Attention Mechanism**.
-- **Rigorous Evaluation**: Benchmark-tested across **802 real-world surveillance video sequences** through **12 ablation configurations**.
-- **Performance**: Attieved **99.0% classification accuracy** and **0.98 F1-Score**, significantly outperforming baseline spatial-only models on subtle micro-actions.
-- **Keywords**: `Video Classification` · `Temporal Attention` · `Anomaly Detection` · `Surveillance AI` · `BiGRU` · `EfficientNet-B3`
+- **The Problem (Surveillance Background Shortcuts)**: In CCTV datasets, static store backgrounds (shelves, fixed lighting, floor tiles) cover >80% of pixels. Conventional video models memorize these camera appearance signatures instead of learning true theft dynamics, leading to false positives on normal customer motions.
+- **Core Innovation (Kinetic Saliency-Contrast Attention)**:
+  - **100% Frozen Backbone**: Freezes **EfficientNet-B3** spatial extractor (`backbone_lr = 0.0`), feeding a 2-layer **BiGRU** (hidden 512).
+  - **Kinetic Action Contrast ($\mathbf{z}_{\text{kinetic}} = \mathbf{z}_{\text{sharp}} - \mathbf{z}_{\text{mean}}$)**: Computes the temporal mean feature ($\mathbf{z}_{\text{mean}}$) representing the static background and subtracts it from the temperature-sharpened peak saliency vector ($\mathbf{z}_{\text{sharp}}$ with $\tau_{\text{sharp}}=0.08$). Stationary scene noise cancels out mathematically ($9.88\times$ noise reduction on walking customers), isolating subtle reaching and concealment micro-gestures.
+- **Rigorous Experimental Validation (from Research Log)**:
+  - Benchmark-evaluated across **802 real-world CCTV video sequences** under a strict **5-Fold Cross-Validation** protocol across 30+ iterative research phases.
+  - **Surpasses 3D CNN Baseline (X3D-S)**: Achieves **97.26% – 97.51% Out-Of-Fold Accuracy** (only 22 total errors vs. 28 errors for X3D-S) with **0.9734 F1-Score** and **0.9805 AUC**.
+  - **Zero False Positives**: Delivered **100% precision (0 FP across 482 surveillance videos)** across Folds 0, 1, and 2.
+- **Keywords**: `Video Classification` · `Temporal Attention` · `Kinetic Action Contrast` · `CCTV Surveillance` · `BiGRU` · `EfficientNet-B3`
 
 ---
 
@@ -82,7 +90,7 @@ I am an **AI Engineer & Vision-Language Model Researcher** pursuing my degree at
 
 - **Deployment**: Engineered full 3-subsystem pipeline deployed and benchmarked on **dual Kaggle T4 GPUs**.
 - **Subsystems**:
-  1. **Temporal Anomaly Engine**: ShopGuard architecture yielding **99% accuracy / 0.98 F1** on theft detection.
+  1. **Temporal Anomaly Engine**: ShopGuard architecture yielding **97.3% – 97.5% accuracy / 0.973 F1** with 100% frozen EfficientNet-B3, outperforming 3D CNN baselines (X3D-S) and delivering 0 false positives across 482 test videos.
   2. **Multi-Modal Person Re-ID**: Fused **CLIP-ReID** body embeddings (1280-D) with **InsightFace / ArcFace** facial embeddings (512-D) and DBSCAN clustering, reaching **85.35% cross-camera search accuracy**.
   3. **Conversational Intelligence**: Orchestrated **Qwen3.5-2B** with **RAG over a Pinecone vector index** to allow store operators to query incident timelines via natural language (e.g., *"Summarize suspicious activity near aisle 4 between 2 PM and 3 PM"*).
 - **Tech Stack**: `PyTorch` · `RT-DETR` · `CLIP-ReID` · `ArcFace` · `EfficientNet-B3` · `BiGRU` · `Qwen3.5-2B` · `Pinecone` · `DBSCAN`
