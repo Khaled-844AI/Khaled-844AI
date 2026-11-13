@@ -23,7 +23,7 @@
 
 <div align="center">
 
-| **99.0%** | **+72.7%** | **1,357** | **97.0%** | **85.35%** |
+| **97.5%** | **+72.7%** | **1,357** | **97.0%** | **85.35%** |
 | :---: | :---: | :---: | :---: | :---: |
 | **Detection Accuracy**<br><sub>Video Shoplifting (ShopGuard)</sub> | **Extraction Improvement**<br><sub>QLoRA Fine-Tuned Qwen2.5-VL</sub> | **Curated Dataset**<br><sub>MCU Block Diagram Annotations</sub> | **JSON Validity Rate**<br><sub>Structured VLM Outputs</sub> | **Multi-Modal Re-ID**<br><sub>CLIP-ReID + ArcFace Fusion</sub> |
 
